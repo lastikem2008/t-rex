@@ -53,7 +53,7 @@ function setup() {
   ground.addImage("ground",groundImage);
   ground.x = ground.width /2;
   
-  gameOver = createSprite(300,150,40,20);
+  gameOver = createSprite(300,150,20,20);
   gameOver.addImage("gameOver",gameOverImg);
   gameOver.scale=0.8;
 
@@ -64,6 +64,7 @@ function setup() {
   restart.scale=0.5;
 
   restart.visible=false;
+
 
 
 
@@ -140,7 +141,9 @@ function draw() {
      gameOver.visible=true;
      restart.visible=true;
    }
-  
+   if(mousePressedOver(restart)){
+     reset();
+   }
   
   //stop trex from falling down
   trex.collide(invisibleGround);
@@ -148,6 +151,16 @@ function draw() {
   
   
   drawSprites();
+}
+
+function reset(){
+  gameOver.visible=false;
+  restart.visible=false;
+  gameState=PLAY;
+  obstaclesGroup.destroyEach();
+  trex.changeAnimation("running", trex_running);
+  cloudsGroup.destroyEach();
+  score = score + Math.round(getFrameRate()/60);
 }
 
 function spawnObstacles(){
